@@ -39,9 +39,6 @@ done < /home/judge/src/web/include/db_info.inc.php
 chown -R www-data:www-data /home/judge/data
 chown -R www-data:www-data /var/log/hustoj/
 
-regexp=`cat /home/judge/src/web/template/bs3/js.php | grep http://hustoj.com/wx.jpg | grep http://hustoj.com/alipay.png`;
-sed -i "s#$regexp##g" /home/judge/src/web/template/bs3/js.php
-
 ln -sf /dev/stdout /var/log/nginx/access.log
 ln -sf /dev/stderr /var/log/nginx/error.log
 
