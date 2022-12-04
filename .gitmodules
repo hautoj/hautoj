@@ -1,0 +1,3 @@
+[submodule "trunk/web/vendors/PHPMailer"]
+	path = trunk/web/vendors/PHPMailer
+	url = https://github.com/PHPMailer/PHPMailer
