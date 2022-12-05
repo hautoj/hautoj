@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - hautoj
-  pull_request:
-    branches:
-      - hautoj
   workflow_dispatch:
 
 jobs:
