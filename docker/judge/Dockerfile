@@ -19,7 +19,7 @@ RUN bash /opt/sources.list.sh &&\
         fp-compiler
 
 # Install Go compiler.
-ARG GO_VERSION=1.19.3
+ARG GO_VERSION=1.13.15
 RUN set -ex \
     && mkdir -p /opt/golang \
     && curl -sSL "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" | tar -v -C /opt/golang -xz --strip-components=1 \
