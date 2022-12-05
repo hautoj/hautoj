@@ -8,6 +8,7 @@ RUN bash /opt/sources.list.sh &&\
     apt-get -y upgrade && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y install --no-install-recommends \
+        curl \
         libmysqlclient-dev \
         libmysql++-dev \
         make \
