@@ -31,6 +31,18 @@ RUN set -ex \
     && curl -sSL "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" | tar -v -C /opt/golang -xz --strip-components=1 \
     && ln -s /opt/golang/bin/go /usr/bin/go
 
+# Install Python (miniforge3)
+ARG MINIFORGE_VERSION=22.9.0-2
+RUN set -ex \
+    && curl -sSL -o /tmp/miniforge.sh "https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" \
+    && bash /tmp/miniforge.sh -b -p /opt/miniforge3 \
+    && pushd /opt/miniforge3/bin \
+        `# 删除 miniforge3 下除了 python 外的可执行文件，以免被恶意利用` \
+        && rm !(python*) \
+    && popd \
+    && rm -f /tmp/miniforge.sh \
+    && ln -s /opt/miniforge3/bin/python3 /usr/bin/python3
+
 COPY trunk /trunk
 
 COPY docker/ /opt/docker/

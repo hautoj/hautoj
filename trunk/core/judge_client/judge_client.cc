@@ -52,6 +52,12 @@
 #include <assert.h>
 #include "okcalls.h"
 
+#include <fstream>
+
+using namespace std;
+
+fstream log_stream("/var/log/judge_client.log", ios::out | ios::app);
+
 #define IGNORE_ESOL //ignore the ending space char of lines while comparing
 #define STD_MB 1048576LL
 #define STD_T_LIM 2
@@ -2082,86 +2088,10 @@ void copy_guile_runtime(char *work_dir)
 
 void copy_python_runtime(char *work_dir)
 {
-	copy_shell_runtime(work_dir);
-	execute_cmd("mkdir -p %s/usr/include", work_dir);
-	execute_cmd("mkdir -p %s/dev", work_dir);
-	
-	execute_cmd("mkdir -p %s/usr/bin", work_dir);
-	execute_cmd("mkdir -p %s/usr/lib", work_dir);
-	execute_cmd("mkdir -p %s/usr/lib64", work_dir);
-	execute_cmd("mkdir -p %s/usr/local/lib", work_dir);
-	execute_cmd("mkdir -p %s/lib/x86_64-linux-gnu", work_dir);
-
-	// /etc/abrt/plugins/python.conf for Centos7
-	execute_cmd("mkdir -p %s/etc/abrt", work_dir);
-	execute_cmd("mkdir -p %s/etc/abrt/plugins", work_dir);
-	execute_cmd("cp -a /etc/abrt/plugins/python.conf %s/etc/abrt/plugins/python.conf", work_dir);
-	
-	// /usr/share/abrt/conf.d/plugins/python.conf for Centos7
-	execute_cmd("mkdir -p %s/usr/share", work_dir);
-	execute_cmd("mkdir -p %s/usr/share/abrt/", work_dir);
-	execute_cmd("mkdir -p %s/usr/share/abrt/conf.d", work_dir);
-	execute_cmd("mkdir -p %s/usr/share/abrt/conf.d/plugins", work_dir);
-	execute_cmd("cp -a /usr/share/abrt/conf.d/plugins/python.conf %s/usr/share/abrt/conf.d/plugins/python.conf", work_dir);
-	if(!py2){	
-		execute_cmd("cp /usr/bin/python2* %s/usr/bin", work_dir);
-		execute_cmd("cp -a /usr/lib/python2* %s/usr/lib/", work_dir);
-		execute_cmd("cp -a /usr/lib64/python2.7  %s/usr/lib64/", work_dir);
-#if (defined __mips__)
-		execute_cmd("cp -a /usr/lib64/python2* %s/usr/lib64/", work_dir);
-		execute_cmd("mkdir -p  %s/usr/local/lib/", work_dir);
-		execute_cmd("cp -a /usr/local/lib/python2* %s/usr/local/lib/", work_dir);
-#endif
-	}else{
-		execute_cmd("cp /usr/bin/python3* %s/usr/bin", work_dir);
-		execute_cmd("cp -a /usr/lib/python3* %s/usr/lib/", work_dir);
-		execute_cmd("cp -a /usr/lib64/python3.6  %s/usr/lib64/", work_dir);
-#if (defined __mips__)
-		execute_cmd("cp -a /usr/lib64/python3* %s/usr/lib64/", work_dir);
-		execute_cmd("mkdir -p  %s/usr/local/lib/", work_dir);
-		execute_cmd("cp -a /usr/local/lib/python3* %s/usr/local/lib/", work_dir);
-#endif
-	}
-	execute_cmd("cp /usr/lib/lapack/* %s/usr/lib/liblapack.so.3", work_dir);
-	execute_cmd("cp /usr/lib/libblas/* %s/usr/lib/libblas.so.3", work_dir);
-	execute_cmd("cp /usr/lib/x86_64-linux-gnu/libgfortran.so.3 %s/usr/lib/", work_dir);
-	execute_cmd("cp /usr/lib/x86_64-linux-gnu/libquadmath.so.0 %s/usr/lib", work_dir);
-	execute_cmd("cp /usr/lib/x86_64-linux-gnu/blas/* %s/usr/lib", work_dir);
-	execute_cmd("cp /usr/lib/x86_64-linux-gnu/liblapack.so* %s/usr/lib", work_dir);
-	execute_cmd("cp /usr/lib/x86_64-linux-gnu/libgfortran.so.4 %s/usr/lib", work_dir);
-#ifdef __mips__
-	execute_cmd("/bin/cp -a /lib64/libpthread.so.0 %s/lib64/", work_dir);
-	execute_cmd("/bin/cp -a /lib64/libutil.so.1 %s/lib64/", work_dir);
-	execute_cmd("/bin/cp -a /lib64/libm.so.6 %s/lib64/", work_dir);
-	execute_cmd("/bin/cp -a /lib64/libc.so.6 %s/lib64/", work_dir);
-	execute_cmd("/bin/cp -a /lib64/libpthread-2.27.so %s/lib64/", work_dir);
-	execute_cmd("/bin/cp -a /lib64/libutil-2.27.so %s/lib64/", work_dir);
-	execute_cmd("/bin/cp -a /lib64/libc-2.27.so %s/lib64/", work_dir);
-	execute_cmd("/bin/cp -a /lib64/libm-2.27.so %s/lib64/", work_dir);
-
-
-#endif
-
-	/*execute_cmd("/bin/mkdir -p %s/lib/x86_64-linux-gnu", work_dir);
-	execute_cmd("/bin/cp -a /lib/x86_64-linux-gnu/libpthread* %s/lib/x86_64-linux-gnu/", work_dir);
-	execute_cmd("/bin/cp -a /lib/x86_64-linux-gnu/libdl.so.2 %s/lib/x86_64-linux-gnu/", work_dir);
-	execute_cmd("/bin/cp -a /lib/x86_64-linux-gnu/libutil.so.1 %s/lib/x86_64-linux-gnu/", work_dir);
-	execute_cmd("/bin/cp -a /lib/x86_64-linux-gnu/libexpat.so.1 %s/lib/x86_64-linux-gnu/", work_dir);
-	execute_cmd("/bin/cp -a /lib/x86_64-linux-gnu/libz.so.1 %s/lib/x86_64-linux-gnu/", work_dir);
-	execute_cmd("/bin/cp -a /lib/x86_64-linux-gnu/libm.so.6 %s/lib/x86_64-linux-gnu/", work_dir);
-	*/
-	//execute_cmd("/bin/cp -a /lib/x86_64-linux-gnu/ %s/lib/x86_64-linux-gnu/", work_dir);
-
-	execute_cmd("cp -a /usr/lib64/libpython* %s/usr/lib64/", work_dir);
-	execute_cmd("cp -a /usr/local/lib/python* %s/usr/local/lib/", work_dir);
-	execute_cmd("cp -a /usr/include/python* %s/usr/include/", work_dir);
-	execute_cmd("cp -a /usr/lib/libpython* %s/usr/lib/", work_dir);
-	execute_cmd("/bin/mkdir -p %s/home/judge", work_dir);
-	execute_cmd("/bin/chown judge %s", work_dir);
-	execute_cmd("/bin/mkdir -p %s/etc", work_dir);
-	execute_cmd("/bin/grep judge /etc/passwd>%s/etc/passwd", work_dir);
-	execute_cmd("/bin/mount -o bind /dev %s/dev", work_dir);
-	execute_cmd("/bin/mount -o remount,ro %s/dev", work_dir);
+	execute_cmd("cp -R /opt/miniforge3/* %s", work_dir);
+	// 复制 linux 动态库 (glibc 等)
+	execute_cmd("cp -R /lib/x86_64-linux-gnu %s/lib/", work_dir);
+	execute_cmd("cp -R /lib64 %s/", work_dir);
 }
 void copy_php_runtime(char *work_dir)
 {
@@ -2352,11 +2282,20 @@ void copy_js_runtime(char *work_dir)
 void run_solution(int &lang, char *work_dir, double &time_lmt, int &usedtime,
 				  int &mem_lmt,char * data_file_path,int p_id)   // 为每个测试数据运行一次提交的答案
 {
-	//准备环境变量处理中文，如果希望使用非中文的语言环境，可能需要修改这些环境变量
-	char * const envp[]={(char * const )"PYTHONIOENCODING=utf-8",
-			     (char * const )"LANG=zh_CN.UTF-8",
-			     (char * const )"LANGUAGE=zh_CN.UTF-8",
-			     (char * const )"LC_ALL=zh_CN.utf-8",NULL};
+    //准备环境变量处理中文，如果希望使用非中文的语言环境，可能需要修改这些环境变量
+    char * const envp[]={
+        (char * const)"ONLINE_JUDGE=1",
+        (char * const)"PYTHONIOENCODING=utf-8",
+        (char * const)"LANG=zh_CN.UTF-8",
+        (char * const)"LANGUAGE=zh_CN.UTF-8",
+        (char * const)"LC_ALL=zh_CN.utf-8",
+		// chroot 后的 python 需要这些环境变量
+        (char * const)"PYTHONPATH=/",
+        (char * const)"PYTHONHOME=/",
+		(char * const)"PYTHONHASHSEED=0",
+        NULL,
+    };
+
 	if(nice(19)!=19) printf("......................renice fail... \n");
 	// now the user is "judger"
 	if(chdir(work_dir)){
@@ -2364,7 +2303,7 @@ void run_solution(int &lang, char *work_dir, double &time_lmt, int &usedtime,
 		exit(-4);
 	}
 	// open the files
-	if(lang==18){ 
+	if(lang==LANG_SQL){ 
 		execute_cmd("/usr/bin/sqlite3 %s/data.db < %s", work_dir,data_file_path);
 		execute_cmd("/bin/chown judge %s/data.db", work_dir);
 		stdin=freopen("Main.sql", "r", stdin);
@@ -2412,19 +2351,29 @@ void run_solution(int &lang, char *work_dir, double &time_lmt, int &usedtime,
 			&& lang != LANG_CSHARP
 			&& !(lang == LANG_PYTHON && python_free )
 	   ){
-		
+		log_stream << "[INFO] chroot to " << work_dir << endl;
 		if(chroot(work_dir));
 	}else{
 		if(lang==LANG_PHP){
+			log_stream << "[INFO] chroot to " << work_dir << endl;
 			if(chroot(work_dir));
 		}
 	}
+	if (lang == LANG_PYTHON) {
+		log_stream << "[INFO] (Python) chroot to " << work_dir << endl;
+		if(chroot(work_dir)) {
+			log_stream << "[ERROR] (Python) chroot to " << work_dir << " failed" << endl;
+		}
+	}
+
 	while (setgid(1536) != 0)
 		sleep(1);
 	while (setuid(1536) != 0)
 		sleep(1);
 	while (setresuid(1536, 1536, 1536) != 0)
 		sleep(1);
+
+	log_stream << "[INFO] setgid(1536) setuid(1536) setresuid(1536, 1536, 1536)" << endl;
 
 	//      char java_p1[BUFFER_SIZE], java_p2[BUFFER_SIZE];
 	// child
@@ -2488,6 +2437,8 @@ void run_solution(int &lang, char *work_dir, double &time_lmt, int &usedtime,
 	if (lang < LANG_JAVA || lang == LANG_OBJC || lang == LANG_CLANG || lang == LANG_CLANGPP || lang == LANG_GO)
 		setrlimit(RLIMIT_AS, &LIM);
 
+	log_stream << "[INFO] setrlimit finished" << endl;
+
 	switch (lang)
 	{
 	case LANG_C:
@@ -2517,14 +2468,13 @@ void run_solution(int &lang, char *work_dir, double &time_lmt, int &usedtime,
 		execle("/bin/bash", "/bin/bash", "Main.sh", (char *)NULL,envp);
 		break;
 	case LANG_PYTHON: //Python
-		if (!py2)
-		{     
-			execle("/usr/bin/python2", "/usr/bin/python2", "Main.py", (char *)NULL,envp);	
-		}
-		else
-		{      
-			execle("/usr/bin/python3", "/usr/bin/python3", "Main.py", (char *)NULL,envp);
-		}
+		execle(
+			"/bin/python3",
+			"/bin/python3",
+			"/Main.py",
+			(char *)NULL,
+			envp
+		);
 		break;
 	case LANG_PHP: //php
 		execle("/usr/bin/php", "/usr/bin/php", "Main.php", (char *)NULL,  envp);
@@ -3296,6 +3246,7 @@ int mark_of_name(const char * name){
 }
 int main(int argc, char **argv)
 {
+	log_stream << "[ ********** judge_client start ********** ]" << endl;
 
 	char work_dir[BUFFER_SIZE];
 	//char cmd[BUFFER_SIZE];
@@ -3472,7 +3423,7 @@ int main(int argc, char **argv)
 		if (lang == LANG_BASH){
 			copy_bash_runtime(work_dir);
 		}
-		if (lang == LANG_PYTHON && !python_free)
+		if (lang == LANG_PYTHON) // && !python_free)
 			copy_python_runtime(work_dir);
 		if (lang == LANG_PHP)
 			copy_php_runtime(work_dir);
