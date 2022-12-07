@@ -38,7 +38,7 @@ RUN set -ex \
     && bash /tmp/miniforge.sh -b -p /opt/miniforge3 \
     && pushd /opt/miniforge3/bin \
         `# 删除 miniforge3 下除了 python 外的可执行文件，以免被恶意利用` \
-        && rm !(python*) \
+        && bash -c 'rm !(python*)' \
     && popd \
     && rm -f /tmp/miniforge.sh \
     && ln -s /opt/miniforge3/bin/python3 /usr/bin/python3
