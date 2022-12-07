@@ -36,9 +36,8 @@ ARG MINIFORGE_VERSION=22.9.0-2
 RUN set -ex \
     && curl -sSL -o /tmp/miniforge.sh "https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" \
     && bash /tmp/miniforge.sh -b -p /opt/miniforge3 \
-    && cd /opt/miniforge3/bin \
-        `# 删除 miniforge3 下除了 python 外的可执行文件，以免被恶意利用` \
-        && bash -c 'rm !(python*)' \
+    `# 删除 miniforge3 下除了 python 外的可执行文件，以免被恶意利用` \
+    && ls /opt/miniforge3/bin/* | grep -v python | xargs rm \
     && rm -f /tmp/miniforge.sh \
     && ln -s /opt/miniforge3/bin/python3 /usr/bin/python3
 
