@@ -3,6 +3,11 @@
 <div class="padding">
     <div class="ui three column grid">
         <div class="eleven wide column">
+            <h4 class="ui top attached block header"><i class="ui info icon"></i>每日提交</h4>
+            <div class="ui bottom attached segment">
+                <div id="submissions-chart"></div>
+            </div>
+
             <h4 class="ui top attached block header"><i class="ui info icon"></i><?php echo $MSG_NEWS;?></h4>
             <div class="ui bottom attached segment">
                 <table class="ui very basic table">
@@ -115,4 +120,57 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/apexcharts/3.36.3/apexcharts.min.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    var SUBMISSIONS_PER_DAY = <?php echo json_encode($chart_data_all); ?> ;
+    var ACCEPTED_PER_DAY = <?php echo json_encode($chart_data_ac); ?> ;
+    var dateArray = Array.from(SUBMISSIONS_PER_DAY).map(e => e[0]);
+    var totalCounts = Array.from(SUBMISSIONS_PER_DAY).map(e => e[1]);
+    var acCounts = Array.from(ACCEPTED_PER_DAY).map(e => e[1]);
+    console.log(dateArray);
+    var options = {
+        series: [
+            { name: '提交', data: totalCounts },
+            { name: '通过', data: acCounts },
+        ],
+        chart: {
+            height: 280,
+            type: 'area',
+            zoom: {
+                enabled: false
+            }
+        },
+        stroke: {
+            width: 0.5,
+            curve: 'straight'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0.9,
+                stops: [0, 100]
+            }
+        },
+        xaxis: {
+            categories: dateArray,
+            labels: {
+                formatter: function (val) {
+                    // convert YYYY-mm-dd to mm-dd
+                    var date = new Date(val);
+                    return date.getMonth() + 1 + '/' + date.getDate();
+                }
+            }
+        }
+    };
+    var chart = new ApexCharts(document.querySelector("#submissions-chart"), options);
+    chart.render();
+});
+</script>
 <?php include("template/$OJ_TEMPLATE/footer.php");?>
