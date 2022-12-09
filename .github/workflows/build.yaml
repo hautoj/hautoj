@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - hautoj
+      - main
   workflow_dispatch:
 
 jobs:
