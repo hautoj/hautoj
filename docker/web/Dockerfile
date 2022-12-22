@@ -20,6 +20,7 @@ RUN set -ex \
         php-xml \
         php-memcache \
         php-memcached \
+        php-redis \
         ca-certificates \
         tzdata \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
