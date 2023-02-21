@@ -1,7 +1,6 @@
 <?php $show_title="首页 - $OJ_NAME"; ?>
 <?php include("template/$OJ_TEMPLATE/header.php");?>
 <div class="padding">
-    <div class="ui three column grid">
         <div class="eleven wide column">
             <h4 class="ui top attached block header"><i class="ui info icon"></i>每日提交</h4>
             <div class="ui bottom attached segment">
@@ -119,7 +118,6 @@
 <!--                </table>-->
 <!--            </div>-->
 <!--        </div>-->
-    </div>
 </div>
 
 <script src="https://cdn.bootcdn.net/ajax/libs/apexcharts/3.36.3/apexcharts.min.js"></script>
