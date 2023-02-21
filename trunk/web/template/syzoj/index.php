@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         <?php
-                        $sql_news = "select * FROM `news` WHERE `defunct`!='Y' AND `title`!='faqs.cn' ORDER BY `importance` ASC,`time` DESC LIMIT 10";
+                        $sql_news = "select * FROM `news` WHERE `defunct`!='Y' AND `title`!='faqs.cn' ORDER BY `importance` ASC,`time` DESC";
                         $result_news = mysql_query_cache( $sql_news );
                         if ( $result_news ) {
                             foreach ( $result_news as $row ) {
@@ -50,7 +50,7 @@
                         ?>
                     </tbody>
                 </table>
-            </div>
+           </div>
         </div>
 <!--        删除侧边栏-->
 <!--        <div class="right floated five wide column">-->
