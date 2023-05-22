@@ -32,10 +32,10 @@
                     </tbody>
                 </table>
             </div>
-            <h4 class="ui top attached block header"><i class="ui star icon"></i><?php echo $OJ_INDEX_NEWS_TITLE;?></h4>
-            <div class="ui bottom attached segment">
-                <table class="ui very basic left aligned table" style="table-layout: fixed; ">
-                    <tbody>
+<!--            <h4 class="ui top attached block header"><i class="ui star icon"></i>--><?php //echo $OJ_INDEX_NEWS_TITLE;?><!--</h4>-->
+<!--            <div class="ui bottom attached segment">-->
+<!--                <table class="ui very basic left aligned table" style="table-layout: fixed; ">-->
+<!--                    <tbody>-->
 
                         <?php
 //                        $sql_news = "select * FROM `news` WHERE `defunct`!='Y' AND `title`='$OJ_INDEX_NEWS_TITLE' ORDER BY `importance` ASC,`time` DESC";
@@ -43,14 +43,20 @@
                         $result_news = mysql_query_cache( $sql_news );
                         if ( $result_news ) {
                             foreach ( $result_news as $row ) {
+                                echo "<div class=\"ui existing segment\" style=\"overflow-y:overlay;\">" ;
+
+                                echo "<h4>".$row["title"]."</h4>";
+
                                 echo "<tr>"."<td>"
                                     .bbcode_to_html($row["content"])."</td></tr>";
+
+                                echo "</div>" ;
                             }
                         }
                         ?>
-                    </tbody>
-                </table>
-           </div>
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--           </div>-->
         </div>
 <!--        删除侧边栏-->
 <!--        <div class="right floated five wide column">-->
@@ -164,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formatter: function (val) {
                     // convert YYYY-mm-dd to mm-dd
                     var date = new Date(val);
-                    return date.getFullYear() + '/' + date.getMonth() + 1 + '/' + date.getDate();
+                    return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
                 }
             },
             type: 'category',
