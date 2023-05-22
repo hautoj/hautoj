@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var dateArray = Array.from(SUBMISSIONS_PER_DAY).map(e => e[0]);
     var totalCounts = Array.from(SUBMISSIONS_PER_DAY).map(e => e[1]);
     var acCounts = Array.from(ACCEPTED_PER_DAY).map(e => e[1]);
-    console.log(dateArray);
+    // console.log(dateArray);
     var options = {
         series: [
             { name: '提交', data: totalCounts },
@@ -165,7 +165,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     var date = new Date(val);
                     return date.getMonth() + 1 + '/' + date.getDate();
                 }
-            }
+            },
+            type: 'category',
+            tickAmount: 5,
         }
     };
     var chart = new ApexCharts(document.querySelector("#submissions-chart"), options);
