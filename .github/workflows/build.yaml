@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build judge image
+        run: docker build . -f docker/judge/Dockerfile -t zengxs/hautoj-judge
+
+      - name: Build web image
+        run: docker build . -f docker/web/Dockerfile -t zengxs/hautoj-web
+
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Push judge image
+        run: docker push zengxs/hautoj-judge
+
+      - name: Push web image
+        run: docker push zengxs/hautoj-web

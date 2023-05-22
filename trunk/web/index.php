@@ -43,7 +43,7 @@ $view_news .= "</div>";
 
 $view_apc_info = "";
 
-$sql = "SELECT UNIX_TIMESTAMP(date(in_date))*1000 md,count(1) c FROM (select * from solution order by solution_id desc limit 8000) solution  where result<13 group by md order by md desc limit 200";
+$sql = "SELECT DATE(in_date) AS md, COUNT(*) AS c FROM solution WHERE result < 13 AND in_date BETWEEN CURDATE() - INTERVAL 180 DAY AND CURDATE() GROUP BY DATE(in_date) ORDER BY md";
 $result = mysql_query_cache( $sql ); //mysql_escape_string($sql));
 $chart_data_all = array();
 //echo $sql;
@@ -52,7 +52,7 @@ foreach ( $result as $row ) {
 	array_push( $chart_data_all, array( $row[ 'md' ], $row[ 'c' ] ) );
 }
 
-$sql = "SELECT UNIX_TIMESTAMP(date(in_date))*1000 md,count(1) c FROM  (select * from solution order by solution_id desc limit 8000) solution where result=4 group by md order by md desc limit 200";
+$sql = "SELECT DATE(in_date) AS md, COUNT(*) AS c FROM solution WHERE result = 4 AND in_date BETWEEN CURDATE() - INTERVAL 180 DAY AND CURDATE() GROUP BY DATE(in_date) ORDER BY md";
 $result = mysql_query_cache( $sql ); //mysql_escape_string($sql));
 $chart_data_ac = array();
 //echo $sql;

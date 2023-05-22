@@ -15,6 +15,9 @@
             <br> Java 使用 <code>OpenJDK 17.0.4</code> 编译，命令为
             <code>	javac -J-Xms32m -J-Xmx256m Main.java</code>，如果您的代码中没有 <code>public class</code>，请将入口类命名为 <code>Main</code>，在评测时提供额外 2 秒的运行时间和 512MB 的运行内存。
             <br>
+            Python 使用 <code>Python 3.10.6</code> 运行环境，命令为
+            <code>python3 Main.py</code>。
+            <br>
             这里给出的编译器版本仅供参考，请以实际编译器版本为准。
         </p>
         <p>请使用<strong>标准输入输出</strong>。</p>

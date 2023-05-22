@@ -121,6 +121,7 @@
             <a class="item <?php if ($url=="ranklist.php") echo "active";?>"
                 href="<?php echo $path_fix?>ranklist.php"><i class="signal icon"></i> <?php echo $MSG_RANKLIST?></a>
             <!--<a class="item <?php //if ($url=="contest.php") echo "active";?>" href="/discussion/global"><i class="comments icon"></i> 讨论</a>-->
+            <a class="item" href="https://www.cnblogs.com/hautacm/"> <i class="fire circle icon"></i> 题解</a>
             <a class="item <?php if ($url=="faqs.php") echo "active";?>" href="<?php echo $path_fix?>faqs.php"><i
                     class="help circle icon"></i> <?php echo $MSG_FAQ?></a>
 
@@ -137,7 +138,6 @@
             <a id="" class="item active" href="<?php echo $path_fix?>contest.php?cid=<?php echo $cid?>" ><i class="list icon"></i><?php echo $MSG_PROBLEMS.$MSG_LIST?></a>
             <a id="" class="item active" href="<?php echo $path_fix?>status.php?cid=<?php echo $cid?>" ><i class="tasks icon"></i><?php echo $MSG_STATUS.$MSG_LIST?></a>
             <a id="" class="item active" href="<?php echo $path_fix?>contestrank.php?cid=<?php echo $cid?>" ><i class="numbered list icon"></i><?php echo $MSG_RANKLIST?></a>
-            <a id="" class="item active" href="<?php echo $path_fix?>contestrank-oi.php?cid=<?php echo $cid?>" ><i class="child icon"></i>OI-<?php echo $MSG_RANKLIST?></a>
 		    <?php if(isset($_SESSION[$OJ_NAME.'_'.'administrator'])||isset($_SESSION[$OJ_NAME.'_'.'contest_creator'])||isset($_SESSION[$OJ_NAME.'_'.'problem_editor'])){ ?>
 			    <a id="" class="item active" href="<?php echo $path_fix?>conteststatistics.php?cid=<?php echo $cid?>" ><i class="eye icon"></i><?php echo $MSG_STATISTICS?></a>
 		    <?php }  ?>
