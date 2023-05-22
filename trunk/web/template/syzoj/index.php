@@ -163,11 +163,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 formatter: function (val) {
                     // convert YYYY-mm-dd to mm-dd
                     var date = new Date(val);
-                    return date.getMonth() + 1 + '/' + date.getDate();
+                    return date.getFullYear() + '/' + date.getMonth() + 1 + '/' + date.getDate();
                 }
             },
             type: 'category',
-            tickAmount: 5,
+            tickAmount: 18,
         }
     };
     var chart = new ApexCharts(document.querySelector("#submissions-chart"), options);
