@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var dateArray = Array.from(SUBMISSIONS_PER_DAY).map(e => e[0]);
     var totalCounts = Array.from(SUBMISSIONS_PER_DAY).map(e => e[1]);
     var acCounts = Array.from(ACCEPTED_PER_DAY).map(e => e[1]);
-    // console.log(dateArray);
+    console.log(dateArray);
     var options = {
         series: [
             { name: '提交', data: totalCounts },
